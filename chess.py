@@ -58,16 +58,16 @@ class Board:
         #w pawns
 
     def print(self):
-        print('    '+'-'*39)
+        print('  '+'-'*32)
         for square in self.squares:            
             if square.x == 1:
-                print(f'{square.name[1]} |',end='')
-            print(f' {square.printable()} |',end='')
+                print(f'{square.name[1]}|',end='')
+            print(f'{square.printable()}|',end='')
             if square.x == 8:
                 print()
-                print('    '+'-'*39)
-        print('  ',end='')       
-        [print(f'  {'ABCDEFGH'[i]}  ', end='') for i in range(0,8)]
+                print('  '+'-'*32)
+        print(' ',end='')       
+        [print(f'  {'ABCDEFGH'[i]} ', end='') for i in range(0,8)]
             
 
 class Square:
@@ -81,9 +81,9 @@ class Square:
 
     def printable(self):
         if self.piece is None:
-            return '⬜' if self.color == 'white' else '  '
+            return '   ' if self.color == 'white' else '   '
         else:
-            return self.piece.symbol+' '
+            return ' '+self.piece.symbol+' '
     
     def __repr__(self):
         connected_names = [sq.name for sq in self.connected]

@@ -1,6 +1,6 @@
 class Board:
     def __init__(self):
-        self.squares = [Square(j,i) for i in range(1,9) for j in range(1,9)]
+        self.squares = [Square(j,i) for i in range(8,0,-1) for j in range(1,9)]
         self.setup()
 
     def setup(self):
@@ -58,32 +58,36 @@ class Board:
         #w pawns
 
     def print(self):
-        print(' '+'-'*39)
+        print('    '+'-'*39)
         for square in self.squares:            
             if square.x == 1:
-                print('|',end='')
+                print(f'{square.name[1]} |',end='')
             print(f' {square.printable()} |',end='')
             if square.x == 8:
                 print()
-                print(' '+'-'*39)
+                print('    '+'-'*39)
+        print('  ',end='')       
+        [print(f'  {'ABCDEFGH'[i]}  ', end='') for i in range(0,8)]
             
 
 class Square:
     def __init__(self,x,y):
         self.x = x
         self.y = y
+        self.color = 'white' if (self.x%2 + self.y%2 == 1) else 'black'
         self.connected = []
         self.piece = None
         self.name = 'ABCDEFGH'[x-1] + str(y)
 
     def printable(self):
         if self.piece is None:
-            return self.name
+            return '⬜' if self.color == 'white' else '  '
         else:
             return self.piece.symbol+' '
     
     def __repr__(self):
         connected_names = [sq.name for sq in self.connected]
+        return self.name
         return f'Square: {self.name}, piece: {self.piece}, connected: {connected_names}'
 
 class Piece:
@@ -97,4 +101,5 @@ class Piece:
 
 if __name__ == '__main__':
     board = Board()
+    print(board.squares)
     board.print()
